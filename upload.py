@@ -1,18 +1,12 @@
 import boto3
 import os
 
-# Configura el cliente S3
 s3 = boto3.client('s3')
 
-# Nombre del bucket
-BUCKET_NAME = "tu-bucket-s3"
+def upload_to_s3(file_path, bucket_name):
+    file_name = os.path.basename(file_path)
+    s3.upload_file(file_path, bucket_name, file_name)
+    print(f"{file_name} subido a {bucket_name}")
 
-# Directorio donde están las imágenes dentro del contenedor
-UPLOAD_FOLDER = "/app/photos"
-
-# Subir archivos
-for filename in os.listdir(UPLOAD_FOLDER):
-    file_path = os.path.join(UPLOAD_FOLDER, filename)
-    if os.path.isfile(file_path):
-        s3.upload_file(file_path, BUCKET_NAME, filename)
-        print(f"Subido: {filename}")
+# Ejemplo de uso
+upload_to_s3("imagen.jpg", "bucket-juan-images")

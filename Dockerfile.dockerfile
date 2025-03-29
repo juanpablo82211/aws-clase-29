@@ -1,7 +1,5 @@
-FROM amazonlinux:latest
-
-RUN yum install -y python3 pip && pip3 install boto3
-
+FROM python:3.9
+RUN pip install boto3
 COPY upload.py /app/upload.py
-
-CMD ["python3", "/app/upload.py"]
+WORKDIR /app
+CMD ["python", "upload.py"]
